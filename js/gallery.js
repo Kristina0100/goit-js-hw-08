@@ -97,14 +97,14 @@ const onSingleImageClick = event => {
     const imgInfo = images.find(image => image.original === imgSource);
 
     const modalInstance =  basicLightbox.create(
-        `
+      `
     <img
       class="gallery-image"
-      src=${imgInfo.preview}
+      src=${imgInfo.original}
       data-source=${imgInfo.original}
       alt=${imgInfo.description}
     />
-        `
+      `
     );
 
     modalInstance.show();
