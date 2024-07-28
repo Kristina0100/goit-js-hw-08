@@ -64,6 +64,7 @@ const images = [
   },
 ];
 
+
 const createImagesGalleryTemplate = ({preview, original, description}) => {
     return `<li class="gallery-item">
   <a class="gallery-link" href=${original}>
@@ -77,39 +78,35 @@ const createImagesGalleryTemplate = ({preview, original, description}) => {
 </li>`
 };
 
-
 const imageGalleryTemplate = images.map(image => createImagesGalleryTemplate(image)).join('');
 
 const imagesGallery = document.querySelector('.gallery');
 imagesGallery.innerHTML = imageGalleryTemplate;
 
-
 const onSingleImageClick = event => {
-    event.preventDefault();
+  event.preventDefault();
 
-    if (event.target === event.currentTarget) {
-        return;
-    };
+  if (event.target === event.currentTarget) {
+    return;
+  };
 
-    const imageItem = event.target.closest('.gallery-image');
-    const imgSource = imageItem.dataset.source;
+  const imgItem = event.target.closest('.gallery-image');
+  const imgSource = imgItem.dataset.source;
+  const imgInfo = images.find(image => image.original === imgSource);
 
-    const imgInfo = images.find(image => image.original === imgSource);
+  const modalInstance =  basicLightbox.create(
+    `
+  <img
+    class="gallery-image"
+    src=${imgInfo.original}
+    data-source=${imgInfo.original}
+    alt=${imgInfo.description}
+  />
+    `
+  );
 
-    const modalInstance =  basicLightbox.create(
-      `
-    <img
-      class="gallery-image"
-      src=${imgInfo.original}
-      data-source=${imgInfo.original}
-      alt=${imgInfo.description}
-    />
-      `
-    );
-
-    modalInstance.show();
+  modalInstance.show();
 };
-
 
 imagesGallery.addEventListener('click', onSingleImageClick);
 
